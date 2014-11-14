@@ -2,15 +2,16 @@ package store;
 
 import mydomain.model.hsqldb.HsqldbEntry;
 
-import javax.jdo.PersistenceManager;
-import javax.jdo.Transaction;
-
 import java.io.IOException;
 import java.util.Properties;
 
 public class HsqldbStore extends Store {
     public HsqldbStore() throws IOException {
         super("jdbc:hsqldb:mem:nucleus1");
+    }
+
+    public void storeHsqldb(HsqldbEntry entry) {
+        put(entry);
     }
 
     protected void configure(Properties properties) {
@@ -27,20 +28,5 @@ public class HsqldbStore extends Store {
         properties.setProperty("datanucleus.validateConstraints", "false");
         properties.setProperty("datanucleus.autoCreateColumns", "true");
         properties.setProperty("datanucleus.connectionPoolingType", "None");
-    }
-
-    public void storeHsqldb(HsqldbEntry entry) throws Exception {
-        PersistenceManager insertManager = pmf.getPersistenceManager();
-        Transaction tx = insertManager.currentTransaction();
-        try {
-            tx.begin();
-            insertManager.makePersistent(entry);
-            tx.commit();
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-            insertManager.close();
-        }
     }
 }
