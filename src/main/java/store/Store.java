@@ -1,21 +1,15 @@
 package store;
 
+import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
-
-import java.util.Properties;
-
 public abstract class Store {
-    protected JDOPersistenceManagerFactory pmf;
+    protected PersistenceManagerFactory pmf;
 
-    protected Store(String connectionURL) {
-        Properties properties = new Properties();
-        properties.setProperty("javax.jdo.option.ConnectionURL",
-                        connectionURL);
-        configure(properties);
-        pmf = new JDOPersistenceManagerFactory(properties);
+    protected Store(String persistenceUnit) {
+        pmf = JDOHelper.getPersistenceManagerFactory(persistenceUnit);
     }
 
     public void close() {
@@ -23,8 +17,6 @@ public abstract class Store {
             pmf.close();
         }
     }
-
-    protected abstract void configure(Properties properties);
 
     protected <T> void put(T data) {
         PersistenceManager insertManager = pmf.getPersistenceManager();
