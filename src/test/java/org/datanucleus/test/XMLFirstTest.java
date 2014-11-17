@@ -20,14 +20,21 @@ public class XMLFirstTest {
 
     @Before
     public void setUp() throws IOException {
-        xmlStore = new XmlStore();
-        hsqldbStore = new HsqldbStore();
+        xmlStore = new XmlStore("/tmp/store.xml");
+        xmlStore.initialize();
+        hsqldbStore = new HsqldbStore("jdbc:hsqldb:mem:nucleus1", "test");
+        hsqldbStore.initialize();
     }
 
     @After
     public void tearDown() {
-        xmlStore.close();
-        hsqldbStore.close();
+        if (xmlStore != null) {
+            xmlStore.close();
+        }
+
+        if (hsqldbStore != null) {
+            hsqldbStore.close();
+        }
     }
 
     @Test

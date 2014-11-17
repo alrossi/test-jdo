@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+                        http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
     version="1.0">
     
     <!-- XML -->
     <persistence-unit name="XmlStore">
         <mapping-file>/mydomain/model/xml/package.jdo</mapping-file>
-        <properties>
-            <property name="javax.jdo.PersistenceManagerFactoryClass" value="org.datanucleus.api.jdo.JDOPersistenceManagerFactory"/>
-            <property name="datanucleus.ConnectionURL" value="xml:file:/tmp/store.xml"/>
-        </properties>
     </persistence-unit>
 
     <!-- HSQLDB -->
     <persistence-unit name="HsqldbStore">
         <mapping-file>/mydomain/model/hsqldb/package.jdo</mapping-file>
         <properties>
-            <property name="javax.jdo.PersistenceManagerFactoryClass" value="org.datanucleus.api.jdo.JDOPersistenceManagerFactory"/>
             <property name="javax.jdo.option.DetachAllOnCommit" value="true"/>
             <property name="javax.jdo.option.Optimistic" value="true"/>
             <property name="javax.jdo.option.NontransactionalRead" value="true"/>
             <property name="javax.jdo.option.RetainValues" value="true"/>
             <property name="javax.jdo.option.Multithreaded" value="true"/>
-            
             <property name="datanucleus.ConnectionDriverName" value="org.hsqldb.jdbcDriver"/>
-            <property name="datanucleus.ConnectionURL" value="jdbc:hsqldb:mem:nucleus1"/>
-            <property name="datanucleus.ConnectionUserName" value="sa"/>
             <property name="datanucleus.autoCreateSchema" value="true"/>
             <property name="datanucleus.validateTables" value="false"/>
             <property name="datanucleus.validateConstraints" value="false"/>
@@ -34,6 +27,4 @@
             <property name="datanucleus.connectionPoolingType" value="None"/>
         </properties>
     </persistence-unit>
-</persistence>
-
 </persistence>
