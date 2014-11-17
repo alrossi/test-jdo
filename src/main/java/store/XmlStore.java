@@ -13,7 +13,7 @@ public class XmlStore extends Store {
         = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<entries></entries>\n";
 
     private static String getURL() throws IOException {
-        File xml = new File("./store.xml");
+        File xml = new File("/tmp/store.xml");
         if (!xml.exists()) {
             if (!xml.getParentFile().isDirectory()) {
                 String parent = xml.getParentFile().getAbsolutePath();
